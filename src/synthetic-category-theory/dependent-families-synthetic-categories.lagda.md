@@ -39,7 +39,7 @@ for induction on P to be a point of P at input f, id_f. A section of a dependent
 family P is a dependent function of type (g : x → y) → (α : f ≅ g) → (P(g,α))₀,
 i.e. a dependent family of synthetic categories. 
 
-```agda
+```agda 
 record
   Dependent-Family-Synthetic-Category-Theory
   {l1 l2 : Level} (K : Cosmos-Synthetic-Category-Theory l1 l2)

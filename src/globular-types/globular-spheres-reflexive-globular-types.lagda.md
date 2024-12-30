@@ -247,6 +247,21 @@ module _ where
     {n = succ-ℕ n} (extension-sphere-Reflexive-Globular-Type x y S) f g =
       extension-sphere-Reflexive-Globular-Type x y
         (suspension-sphere-Reflexive-Globular-Type S f g)
+
+  desuspension-sphere-Reflexive-Globular-Type :
+    {l : Level} {G : Reflexive-Globular-Type l l} {n : ℕ}
+    (S : sphere-Reflexive-Globular-Type G (succ-ℕ n)) →
+    sphere-Reflexive-Globular-Type G n
+  desuspension-sphere-Reflexive-Globular-Type
+    ( extension-sphere-Reflexive-Globular-Type x y
+      empty-sphere-Reflexive-Globular-Type) =
+        empty-sphere-Reflexive-Globular-Type
+  desuspension-sphere-Reflexive-Globular-Type
+    ( extension-sphere-Reflexive-Globular-Type x y
+      ( extension-sphere-Reflexive-Globular-Type f g S)) =
+        extension-sphere-Reflexive-Globular-Type x y
+          ( desuspension-sphere-Reflexive-Globular-Type
+            ( extension-sphere-Reflexive-Globular-Type f g S))
 ```
 
 **Comment.** Given a globular sphere S of dimension n and two (n+1)-cells x and
@@ -342,4 +357,15 @@ module _ where
       ( 0-cell-suspension-1-cell-sphere-Reflexive-Globular-Type S x x
         ( refl-1-cell-sphere-Reflexive-Globular-Type S x))
 
+
+  refl-sphere-Reflexive-Globular-Type' : 
+    {l : Level} {G : Reflexive-Globular-Type l l} {n : ℕ}
+    (S : sphere-Reflexive-Globular-Type G n) →
+    (x : higher-cell-sphere-Reflexive-Globular-Type S) →
+    higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S x x)
+  refl-sphere-Reflexive-Globular-Type' S x = 
+    0-cell-suspension-1-cell-sphere-Reflexive-Globular-Type S x x
+      ( refl-1-cell-sphere-Reflexive-Globular-Type S x)
+ 
 ```
