@@ -89,10 +89,10 @@ data sphere-Reflexive-Globular-Type
   ℕ → UU (lsuc l1 ⊔ lsuc l2)
   where
 
-  empty-sphere-Reflexive-Globular-Type :
+  -1-dim-sphere :
     sphere-Reflexive-Globular-Type G zero-ℕ
 
-  extension-sphere-Reflexive-Globular-Type :
+  extension-sphere :
     {n : ℕ} (x y : 0-cell-Reflexive-Globular-Type G) →
     sphere-Reflexive-Globular-Type
       ( 1-cell-reflexive-globular-type-Reflexive-Globular-Type G x y) n →
@@ -116,13 +116,13 @@ module _
     (S : sphere-Reflexive-Globular-Type G (succ-ℕ n)) →
     0-cell-Reflexive-Globular-Type G
   source-0-cell-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y S) = x
+    ( extension-sphere x y S) = x
 
   target-0-cell-sphere-Reflexive-Globular-Type :
     (S : sphere-Reflexive-Globular-Type G (succ-ℕ n)) →
     0-cell-Reflexive-Globular-Type G
   target-0-cell-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y S) = y
+    ( extension-sphere x y S) = y
     
   sphere-higher-cells-sphere-Reflexive-Gloublar-Type :
     (S : sphere-Reflexive-Globular-Type G (succ-ℕ n)) →
@@ -133,7 +133,7 @@ module _
         ( target-0-cell-sphere-Reflexive-Globular-Type S))
       ( n)
   sphere-higher-cells-sphere-Reflexive-Gloublar-Type
-    (extension-sphere-Reflexive-Globular-Type x y S) = S
+    (extension-sphere x y S) = S
 
 ```
 
@@ -155,9 +155,9 @@ module _ where
     (S : sphere-Reflexive-Globular-Type G n) →
     Reflexive-Globular-Type l1 l2 + Reflexive-Globular-Type l2 l2
   reflexive-globular-type-sphere-Reflexive-Globular-Type {G = G}
-    empty-sphere-Reflexive-Globular-Type = inl G
+    -1-dim-sphere = inl G
   reflexive-globular-type-sphere-Reflexive-Globular-Type {l1} {l2} {G}
-    ( extension-sphere-Reflexive-Globular-Type x y S') = inr
+    ( extension-sphere x y S') = inr
       ( codiagonal _
         ( reflexive-globular-type-sphere-Reflexive-Globular-Type {l2} {l2} S'))
 
@@ -169,13 +169,13 @@ module _ where
   reflexive-globular-type-one-level-sphere-Reflexive-Globular-Type S =
     codiagonal _ (reflexive-globular-type-sphere-Reflexive-Globular-Type S)
 
-  reflexive-globular-type-nonempty-sphere-Reflexive-Globular-Type :
+  reflexive-globular-type-non-1-dim-sphere :
     {l1 l2 : Level} {n : ℕ}
     {G : Reflexive-Globular-Type l1 l2} →
     (S : sphere-Reflexive-Globular-Type G (succ-ℕ n)) →
     Reflexive-Globular-Type l2 l2
-  reflexive-globular-type-nonempty-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y S') =
+  reflexive-globular-type-non-1-dim-sphere
+    ( extension-sphere x y S') =
       codiagonal _ ( reflexive-globular-type-sphere-Reflexive-Globular-Type S')
 ```
 
@@ -215,7 +215,7 @@ module _ where
   n-proper-subtype-Reflexive-Globular-Type : {l1 l2 : Level}
     (G : Reflexive-Globular-Type l1 l2) → (n : ℕ) → UU (lsuc l1 ⊔ lsuc l2)
   n-proper-subtype-Reflexive-Globular-Type {l1} {l2} G n = im
-    ( reflexive-globular-type-nonempty-sphere-Reflexive-Globular-Type
+    ( reflexive-globular-type-non-1-dim-sphere
       {l1} {l2} {n} {G})  
 
   proper-subtype-Reflexive-Globular-Type : {l1 l2 : Level}
@@ -240,12 +240,12 @@ module _ where
       ( reflexive-globular-type-one-level-sphere-Reflexive-Globular-Type S)) →
     sphere-Reflexive-Globular-Type G (succ-ℕ n)
   suspension-sphere-Reflexive-Globular-Type
-    {n = zero-ℕ} empty-sphere-Reflexive-Globular-Type f g =
-      extension-sphere-Reflexive-Globular-Type f g
-      empty-sphere-Reflexive-Globular-Type
+    {n = zero-ℕ} -1-dim-sphere f g =
+      extension-sphere f g
+      -1-dim-sphere
   suspension-sphere-Reflexive-Globular-Type
-    {n = succ-ℕ n} (extension-sphere-Reflexive-Globular-Type x y S) f g =
-      extension-sphere-Reflexive-Globular-Type x y
+    {n = succ-ℕ n} (extension-sphere x y S) f g =
+      extension-sphere x y
         (suspension-sphere-Reflexive-Globular-Type S f g)
 
   desuspension-sphere-Reflexive-Globular-Type :
@@ -253,15 +253,15 @@ module _ where
     (S : sphere-Reflexive-Globular-Type G (succ-ℕ n)) →
     sphere-Reflexive-Globular-Type G n
   desuspension-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y
-      empty-sphere-Reflexive-Globular-Type) =
-        empty-sphere-Reflexive-Globular-Type
+    ( extension-sphere x y
+      -1-dim-sphere) =
+        -1-dim-sphere
   desuspension-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y
-      ( extension-sphere-Reflexive-Globular-Type f g S)) =
-        extension-sphere-Reflexive-Globular-Type x y
+    ( extension-sphere x y
+      ( extension-sphere f g S)) =
+        extension-sphere x y
           ( desuspension-sphere-Reflexive-Globular-Type
-            ( extension-sphere-Reflexive-Globular-Type f g S))
+            ( extension-sphere f g S))
 ```
 
 **Comment.** Given a globular sphere S of dimension n and two (n+1)-cells x and
@@ -281,9 +281,9 @@ module _ where
     higher-cell-sphere-Reflexive-Globular-Type
       ( suspension-sphere-Reflexive-Globular-Type S x y)
   0-cell-suspension-1-cell-sphere-Reflexive-Globular-Type
-    {n = zero-ℕ} empty-sphere-Reflexive-Globular-Type x y f = f
+    {n = zero-ℕ} -1-dim-sphere x y f = f
   0-cell-suspension-1-cell-sphere-Reflexive-Globular-Type
-    {n = succ-ℕ n} (extension-sphere-Reflexive-Globular-Type a b S) x y f =
+    {n = succ-ℕ n} (extension-sphere a b S) x y f =
       0-cell-suspension-1-cell-sphere-Reflexive-Globular-Type S x y f
 
   1-cell-sphere-0-cell-suspension-Reflexive-Globular-Type :
@@ -296,9 +296,9 @@ module _ where
     (1-cell-Reflexive-Globular-Type
       ( reflexive-globular-type-one-level-sphere-Reflexive-Globular-Type S) x y)
   1-cell-sphere-0-cell-suspension-Reflexive-Globular-Type
-    {n = zero-ℕ} empty-sphere-Reflexive-Globular-Type x y f = f
+    {n = zero-ℕ} -1-dim-sphere x y f = f
   1-cell-sphere-0-cell-suspension-Reflexive-Globular-Type
-    {n = succ-ℕ n} (extension-sphere-Reflexive-Globular-Type a b S) x y f =
+    {n = succ-ℕ n} (extension-sphere a b S) x y f =
       1-cell-sphere-0-cell-suspension-Reflexive-Globular-Type S x y f
 ```
 
@@ -318,7 +318,7 @@ module _ where
       ( reflexive-globular-type-one-level-sphere-Reflexive-Globular-Type
         ( sphere-higher-cells-sphere-Reflexive-Gloublar-Type S))
   invariance-reflexive-globular-type-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y S) =
+    ( extension-sphere x y S) =
       id-reflexive-globular-equiv _
 ```
 
@@ -337,10 +337,10 @@ module _ where
     1-cell-Reflexive-Globular-Type
       ( reflexive-globular-type-one-level-sphere-Reflexive-Globular-Type S) f f
   refl-1-cell-sphere-Reflexive-Globular-Type
-    {G = G} empty-sphere-Reflexive-Globular-Type x =
+    {G = G} -1-dim-sphere x =
       refl-1-cell-Reflexive-Globular-Type G {x}
   refl-1-cell-sphere-Reflexive-Globular-Type
-    ( extension-sphere-Reflexive-Globular-Type x y S) f =
+    ( extension-sphere x y S) f =
       refl-1-cell-sphere-Reflexive-Globular-Type S f
 
   refl-sphere-Reflexive-Globular-Type : 
@@ -358,13 +358,13 @@ module _ where
         ( refl-1-cell-sphere-Reflexive-Globular-Type S x))
 
 
-  refl-sphere-Reflexive-Globular-Type' : 
+  refl-sphere-suspension-Reflexive-Globular-Type : 
     {l : Level} {G : Reflexive-Globular-Type l l} {n : ℕ}
     (S : sphere-Reflexive-Globular-Type G n) →
     (x : higher-cell-sphere-Reflexive-Globular-Type S) →
     higher-cell-sphere-Reflexive-Globular-Type
       ( suspension-sphere-Reflexive-Globular-Type S x x)
-  refl-sphere-Reflexive-Globular-Type' S x = 
+  refl-sphere-suspension-Reflexive-Globular-Type S x = 
     0-cell-suspension-1-cell-sphere-Reflexive-Globular-Type S x x
       ( refl-1-cell-sphere-Reflexive-Globular-Type S x)
  

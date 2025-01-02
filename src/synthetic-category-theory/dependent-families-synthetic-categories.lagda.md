@@ -3,7 +3,8 @@
 ```agda
 {-# OPTIONS --guardedness #-}
 
-module synthetic-category-theory.dependent-families-synthetic-categories where
+module synthetic-category-theory.dependent-families-synthetic-categories
+  where
 ```
 
 <details><summary>Imports</summary>
@@ -16,7 +17,7 @@ open import elementary-number-theory.natural-numbers
 open import globular-types.reflexive-globular-types
 open import globular-types.globular-spheres-reflexive-globular-types
 
-open import synthetic-category-theory.synthetic-categories 
+open import synthetic-category-theory.synthetic-categories
 ```
 
 </details>
@@ -39,73 +40,56 @@ for induction on P to be a point of P at input f, id_f. A section of a dependent
 family P is a dependent function of type (g : x → y) → (α : f ≅ g) → (P(g,α))₀,
 i.e. a dependent family of synthetic categories. 
 
-```agda 
-record
-  Dependent-Family-Synthetic-Category-Theory
-  {l1 l2 : Level} (K : Cosmos-Synthetic-Category-Theory l1 l2)
-  {C D : category-Synthetic-Category-Theory K}
-  (f : functor-Synthetic-Category-Theory K C D) {n : ℕ} : UU (lsuc l1 ⊔ lsuc l2)
-  where
 
-  field
-    left-cat-Dependent-Family-Synthetic-Category-Theory :
-      (g : functor-Synthetic-Category-Theory K C D) →
-      (α : nat-iso-Synthetic-Category-Theory K f g) →
-      category-Synthetic-Category-Theory K
+-- ```agda
+module _ where
 
-  field
-    right-cat-Dependent-Family-Synthetic-Category-Theory :
-      (g : functor-Synthetic-Category-Theory K C D) →
-      (α : nat-iso-Synthetic-Category-Theory K f g) →
-      category-Synthetic-Category-Theory K
-  
-  field
-    left-fun-Dependent-Family-Synthetic-Category-Theory :
-      (g : functor-Synthetic-Category-Theory K C D) →
-      (α : nat-iso-Synthetic-Category-Theory K f g) →
-      functor-Synthetic-Category-Theory K
-        ( left-cat-Dependent-Family-Synthetic-Category-Theory g α)
-        ( right-cat-Dependent-Family-Synthetic-Category-Theory g α)
-    
-  field
-    right-fun-Dependent-Family-Synthetic-Category-Theory :
-      (g : functor-Synthetic-Category-Theory K C D) →
-      (α : nat-iso-Synthetic-Category-Theory K f g) →
-      functor-Synthetic-Category-Theory K
-        ( left-cat-Dependent-Family-Synthetic-Category-Theory g α)
-        ( right-cat-Dependent-Family-Synthetic-Category-Theory g α)
-
-  field
-    higher-cells-Dependent-Family-Synthetic-Category-Theory :
-      (g : functor-Synthetic-Category-Theory K C D) →
-      (α : nat-iso-Synthetic-Category-Theory K f g) →
-      sphere-Reflexive-Globular-Type
-        ( 1-cell-reflexive-globular-type-Reflexive-Globular-Type
-          ( functor-reflexive-globular-type-Synthetic-Category-Theory K
-            ( left-cat-Dependent-Family-Synthetic-Category-Theory g α)
-            ( right-cat-Dependent-Family-Synthetic-Category-Theory g α))
-          ( left-fun-Dependent-Family-Synthetic-Category-Theory g α)
-          ( right-fun-Dependent-Family-Synthetic-Category-Theory g α))
-        ( n)
+  Dependent-Family-Synthetic-Category-Theory :
+    {l : Level} {n : ℕ} {m : ℕ}
+    {G : Reflexive-Globular-Type l l}
+    (S : sphere-Reflexive-Globular-Type G n) →
+    (f : higher-cell-sphere-Reflexive-Globular-Type S) →
+    UU (lsuc l)
+  Dependent-Family-Synthetic-Category-Theory {m = m} {G = G} S f = 
+    (g : higher-cell-sphere-Reflexive-Globular-Type S) →
+    (α : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
+    sphere-Reflexive-Globular-Type G (succ-ℕ (succ-ℕ m))
 
   point-Dependent-Family-Synthetic-Category-Theory :
-    (g : functor-Synthetic-Category-Theory K C D) →
-    (α : nat-iso-Synthetic-Category-Theory K f g) → UU l2
-  point-Dependent-Family-Synthetic-Category-Theory g α =
-    iso-Synthetic-Category-Theory K
-      ( higher-cells-Dependent-Family-Synthetic-Category-Theory g α)
+    {l : Level} {n : ℕ} {m : ℕ}
+    {G : Reflexive-Globular-Type l l}
+    {S : sphere-Reflexive-Globular-Type G n}
+    {f : higher-cell-sphere-Reflexive-Globular-Type S}
+    (P : Dependent-Family-Synthetic-Category-Theory {m = m} S f) →
+    (g : higher-cell-sphere-Reflexive-Globular-Type S) →
+    (α : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
+    UU l
+  point-Dependent-Family-Synthetic-Category-Theory P g α =
+    higher-cell-sphere-Reflexive-Globular-Type (P g α)
 
-  induction-base-Dependent-Family-Synthetic-Category-Theory : UU l2
-  induction-base-Dependent-Family-Synthetic-Category-Theory =
-    point-Dependent-Family-Synthetic-Category-Theory
-      ( f)
-      ( id-nat-iso-Synthetic-Category-Theory K f)
-
-  section-Dependent-Family-Synthetic-Category-Theory : UU l2
-  section-Dependent-Family-Synthetic-Category-Theory = 
-    (g : functor-Synthetic-Category-Theory K C D) →
-    (α : nat-iso-Synthetic-Category-Theory K f g) →
-    point-Dependent-Family-Synthetic-Category-Theory g α
-
-open Dependent-Family-Synthetic-Category-Theory public
-```
+  base-Dependent-Family-Synthetic-Category-Theory :
+    {l : Level} {n : ℕ} {m : ℕ}
+    {G : Reflexive-Globular-Type l l}
+    {S : sphere-Reflexive-Globular-Type G n}
+    {f : higher-cell-sphere-Reflexive-Globular-Type S}
+    (P : Dependent-Family-Synthetic-Category-Theory {m = m} S f) →
+    UU l
+  base-Dependent-Family-Synthetic-Category-Theory {S = S} {f = f} P =
+    point-Dependent-Family-Synthetic-Category-Theory {S = S} {f = f}
+      P f (refl-sphere-suspension-Reflexive-Globular-Type S f)
+      
+  section-Dependent-Family-Synthetic-Category-Theory :
+    {l : Level} {n : ℕ} {m : ℕ}
+    {G : Reflexive-Globular-Type l l}
+    {S : sphere-Reflexive-Globular-Type G n}
+    {f : higher-cell-sphere-Reflexive-Globular-Type S}
+    (P : Dependent-Family-Synthetic-Category-Theory {m = m} S f) →
+    UU l
+  section-Dependent-Family-Synthetic-Category-Theory {S = S} {f = f} P = 
+    (g : higher-cell-sphere-Reflexive-Globular-Type S) →
+    (α : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
+    point-Dependent-Family-Synthetic-Category-Theory {S = S} {f = f} P g α
+```  
