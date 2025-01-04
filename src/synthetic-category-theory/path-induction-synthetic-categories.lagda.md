@@ -456,8 +456,7 @@ module _
 
   unitality-left-whisk-nat-iso-Synthetic-Category-Theory :
     {C D E : category-Synthetic-Category-Theory K}
-    {f f' : functor-Synthetic-Category-Theory K C D}
-    (α : nat-iso-Synthetic-Category-Theory K f f') →
+    {f : functor-Synthetic-Category-Theory K C D}
     (g : functor-Synthetic-Category-Theory K D E) →
     3-iso-Synthetic-Category-Theory K
       ( left-whisk-nat-iso-Synthetic-Category-Theory
@@ -465,10 +464,9 @@ module _
         ( g))
       ( id-nat-iso-Synthetic-Category-Theory K
         ( comp-fun-Synthetic-Category-Theory K f g))
-  unitality-left-whisk-nat-iso-Synthetic-Category-Theory {f = f} α g =
+  unitality-left-whisk-nat-iso-Synthetic-Category-Theory {f = f} g =
     ind-iso-Synthetic-Category-Theory I
-      ( extension-sphere _ _
-        -1-dim-sphere)
+      ( extension-sphere _ _ -1-dim-sphere)
       ( f)
       ( dependent-family-left-whisk-nat-iso-Synthetic-Category-Theory f g)
       ( base-dependent-family-left-whisk-nat-iso-Synthetic-Category-Theory
@@ -575,13 +573,10 @@ module _
         ( comp-iso-Synthetic-Category-Theory K I S α' β))
   left-whisk-iso-Synthetic-Category-Theory S {f} {g} {h} {α} β {α'} φ =
     ind-Synthetic-Category-Theory I
-      ( suspension-sphere-Reflexive-Globular-Type S f g)
-      ( α)
+      ( suspension-sphere-Reflexive-Globular-Type S f g) ( α)
       ( dependent-family-left-whisk-iso-Synthetic-Category-Theory S f g h α β)
       ( base-dependent-family-left-whisk-iso-Synthetic-Category-Theory
-        S f g h α β)
-      ( α')
-      ( φ)
+        S f g h α β) ( α') ( φ)
 
   right-whisk-iso-Synthetic-Category-Theory :
     {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
@@ -608,6 +603,58 @@ module _
       ( β')
       ( φ)
 
+  unitality-left-whisk-iso-Synthetic-Category-Theory :
+    {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
+    {f g h : higher-cell-sphere-Reflexive-Globular-Type S} →
+    {α : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S f g)} →
+    (β : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S g h)) →
+    iso-Synthetic-Category-Theory K
+      ( suspension-sphere-Reflexive-Globular-Type
+        ( suspension-sphere-Reflexive-Globular-Type
+          (suspension-sphere-Reflexive-Globular-Type S f h)
+          ( comp-iso-Synthetic-Category-Theory K I S α β)
+          ( comp-iso-Synthetic-Category-Theory K I S α β))
+        ( left-whisk-iso-Synthetic-Category-Theory S β
+          ( id-iso-Synthetic-Category-Theory K
+            ( suspension-sphere-Reflexive-Globular-Type S f g) α))
+        ( id-iso-Synthetic-Category-Theory K
+          ( suspension-sphere-Reflexive-Globular-Type S f h)
+          ( comp-iso-Synthetic-Category-Theory K I S α β)))
+  unitality-left-whisk-iso-Synthetic-Category-Theory S {f} {g} {h} {α} β =
+    ind-iso-Synthetic-Category-Theory I
+      ( suspension-sphere-Reflexive-Globular-Type S f g) ( α)
+      ( dependent-family-left-whisk-iso-Synthetic-Category-Theory S f g h α β)
+      ( base-dependent-family-left-whisk-iso-Synthetic-Category-Theory
+        S f g h α β)
+
+  unitality-right-whisk-iso-Synthetic-Category-Theory :
+    {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
+    {f g h : higher-cell-sphere-Reflexive-Globular-Type S} →
+    (α : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
+    {β : higher-cell-sphere-Reflexive-Globular-Type
+      ( suspension-sphere-Reflexive-Globular-Type S g h)} →
+    iso-Synthetic-Category-Theory K
+      ( suspension-sphere-Reflexive-Globular-Type
+        ( suspension-sphere-Reflexive-Globular-Type
+          (suspension-sphere-Reflexive-Globular-Type S f h)
+          ( comp-iso-Synthetic-Category-Theory K I S α β)
+          ( comp-iso-Synthetic-Category-Theory K I S α β))
+        ( right-whisk-iso-Synthetic-Category-Theory S α
+          ( id-iso-Synthetic-Category-Theory K
+            ( suspension-sphere-Reflexive-Globular-Type S g h) β))
+        ( id-iso-Synthetic-Category-Theory K
+          ( suspension-sphere-Reflexive-Globular-Type S f h)
+          ( comp-iso-Synthetic-Category-Theory K I S α β)))
+  unitality-right-whisk-iso-Synthetic-Category-Theory S {f} {g} {h} α {β} =
+    ind-iso-Synthetic-Category-Theory I
+      ( suspension-sphere-Reflexive-Globular-Type S g h) ( β)
+      ( dependent-family-right-whisk-iso-Synthetic-Category-Theory S f g h α β)
+      ( base-dependent-family-right-whisk-iso-Synthetic-Category-Theory
+        S f g h α β)
+
   left-whisk-3-iso-Synthetic-Category-Theory :
     {C D : category-Synthetic-Category-Theory K}
     {f g h : functor-Synthetic-Category-Theory K C D}
@@ -619,8 +666,7 @@ module _
       ( comp-nat-iso-Synthetic-Category-Theory K I α' β)
   left-whisk-3-iso-Synthetic-Category-Theory β φ =
     left-whisk-iso-Synthetic-Category-Theory
-      ( extension-sphere _ _
-        -1-dim-sphere) β φ
+      ( extension-sphere _ _ -1-dim-sphere) β φ
 
   right-whisk-3-iso-Synthetic-Category-Theory :
     {C D : category-Synthetic-Category-Theory K}
@@ -803,8 +849,7 @@ module _
       ( α)
   right-unit-law-comp-nat-iso-Synthetic-Category-Theory =
     right-unit-law-comp-iso-Synthetic-Category-Theory
-      ( extension-sphere _ _
-        -1-dim-sphere) 
+      ( extension-sphere _ _ -1-dim-sphere) 
 
   iso-right-left-unit-law-comp-id-iso-Synthetic-Category-Theory :
     {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
@@ -827,7 +872,6 @@ module _
       ( base-dependent-family-right-unit-law-comp-iso-Synthetic-Category-Theory
         S f)
 
-
   iso-right-left-unit-law-comp-id-nat-iso-Synthetic-Category-Theory :
     {C D : category-Synthetic-Category-Theory K} →
     (f : functor-Synthetic-Category-Theory K C D) →
@@ -838,8 +882,7 @@ module _
         ( id-nat-iso-Synthetic-Category-Theory K f))
   iso-right-left-unit-law-comp-id-nat-iso-Synthetic-Category-Theory {C} {D} =
     iso-right-left-unit-law-comp-id-iso-Synthetic-Category-Theory
-      ( extension-sphere C D
-        -1-dim-sphere)
+      ( extension-sphere C D -1-dim-sphere)
 ```
 
 ### Horizontal composition of isomorphisms
@@ -855,71 +898,6 @@ module _
   {l : Level} (K : Cosmos-Synthetic-Category-Theory l)
   (I : path-induction-Synthetic-Category-Theory K)
   where
-
-  dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory :
-    {C D E : category-Synthetic-Category-Theory K}
-    (f : functor-Synthetic-Category-Theory K C D) →
-    (g : functor-Synthetic-Category-Theory K D E) →
-    Dependent-Family-Synthetic-Category-Theory
-      { G = logos-Synthetic-Category-Theory K}
-      ( extension-sphere D E
-        -1-dim-sphere) g
-  dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory f g g' α =
-    extension-sphere _ _
-      ( extension-sphere
-        ( comp-fun-Synthetic-Category-Theory K f g)
-        ( comp-fun-Synthetic-Category-Theory K f g')
-          -1-dim-sphere)
-
-  base-dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory :
-    {C D E : category-Synthetic-Category-Theory K}
-    (f : functor-Synthetic-Category-Theory K C D) →
-    (g : functor-Synthetic-Category-Theory K D E) →
-    base-Dependent-Family-Synthetic-Category-Theory
-      { S = (extension-sphere D E 
-        -1-dim-sphere)}
-      ( dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory f g)
-  base-dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory
-    f g = id-nat-iso-Synthetic-Category-Theory K
-      ( comp-fun-Synthetic-Category-Theory K f g)
-
-  partial-hor-comp-nat-iso-Synthetic-Category-Theory :
-    {C D E : category-Synthetic-Category-Theory K}
-    {g g' : functor-Synthetic-Category-Theory K D E}
-    (f : functor-Synthetic-Category-Theory K C D) →
-    (β : nat-iso-Synthetic-Category-Theory K g g') →
-    nat-iso-Synthetic-Category-Theory K
-      ( comp-fun-Synthetic-Category-Theory K f g)
-      ( comp-fun-Synthetic-Category-Theory K f g')
-  partial-hor-comp-nat-iso-Synthetic-Category-Theory {g = g} {g' = g'} f β =
-    ind-Synthetic-Category-Theory I
-      ( extension-sphere _ _
-        -1-dim-sphere)
-      ( g)
-      ( dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory f g)
-      ( base-dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory
-        f g)
-      ( g')
-      ( β)
-
-  coherence-partial-hor-comp-nat-iso-Synthetic-Category-Theory :
-    {C D E : category-Synthetic-Category-Theory K}
-    (f : functor-Synthetic-Category-Theory K C D) →
-    (g : functor-Synthetic-Category-Theory K D E) →
-    3-iso-Synthetic-Category-Theory K
-      ( partial-hor-comp-nat-iso-Synthetic-Category-Theory
-        ( f)
-        ( id-nat-iso-Synthetic-Category-Theory K g))
-      ( id-nat-iso-Synthetic-Category-Theory K
-        ( comp-fun-Synthetic-Category-Theory K f g))
-  coherence-partial-hor-comp-nat-iso-Synthetic-Category-Theory f g =
-    ind-iso-Synthetic-Category-Theory I
-      ( extension-sphere _ _
-        -1-dim-sphere)
-      ( g)
-      ( dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory f g)
-      ( base-dependent-family-partial-hor-comp-nat-iso-Synthetic-Category-Theory
-        f g)
 
   dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory :
     {C D E : category-Synthetic-Category-Theory K}
@@ -942,11 +920,10 @@ module _
     (g g' : functor-Synthetic-Category-Theory K D E) →
     (β : nat-iso-Synthetic-Category-Theory K g g') →
     base-Dependent-Family-Synthetic-Category-Theory
-      { S = (extension-sphere _ _ 
-        -1-dim-sphere)}
+      { S = ( extension-sphere _ _  -1-dim-sphere)}
       ( dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory f g g')
   base-dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory
-    f g g' β = partial-hor-comp-nat-iso-Synthetic-Category-Theory f β
+    f g g' β = right-whisk-nat-iso-Synthetic-Category-Theory K I f β
 
   hor-comp-nat-iso-Synthetic-Category-Theory :
     {C D E : category-Synthetic-Category-Theory K}
@@ -959,70 +936,30 @@ module _
       ( comp-fun-Synthetic-Category-Theory K f' g')
   hor-comp-nat-iso-Synthetic-Category-Theory
     {f = f} {f' = f'} {g = g} {g' = g'} α β =
-      ind-Synthetic-Category-Theory I
-        (extension-sphere _ _ 
-          -1-dim-sphere)
-        ( f)
-        ( dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory f g g')
-        ( base-dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory
-          f g g' β)
-        ( f')
-        ( α)
+    ind-Synthetic-Category-Theory I (extension-sphere _ _  -1-dim-sphere) ( f)
+      ( dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory f g g')
+      ( base-dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory
+        f g g' β)
+      ( f')
+      ( α)
 
-  dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory :
-    {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
-    {f g h : higher-cell-sphere-Reflexive-Globular-Type S} →
-    (α : higher-cell-sphere-Reflexive-Globular-Type
-      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
-    (β : higher-cell-sphere-Reflexive-Globular-Type
-      ( suspension-sphere-Reflexive-Globular-Type S g h)) →
-    Dependent-Family-Synthetic-Category-Theory
-      ( suspension-sphere-Reflexive-Globular-Type S g h) β
-  dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory
-    S {f = f} {h = h} α β β' φ =
-    suspension-sphere-Reflexive-Globular-Type
-      ( suspension-sphere-Reflexive-Globular-Type S f h)
-      ( comp-iso-Synthetic-Category-Theory K I S α β)
-      ( comp-iso-Synthetic-Category-Theory K I S α β')
+  hor-comp-id-nat-iso-right-whisk-Synthetic-Category-Theory :
+    {C D E : category-Synthetic-Category-Theory K}
+    {f : functor-Synthetic-Category-Theory K C D}
+    {g g' : functor-Synthetic-Category-Theory K D E}
+    (β : nat-iso-Synthetic-Category-Theory K g g') →
+    3-iso-Synthetic-Category-Theory K
+      ( hor-comp-nat-iso-Synthetic-Category-Theory
+        ( id-nat-iso-Synthetic-Category-Theory K f)
+        ( β))
+      ( right-whisk-nat-iso-Synthetic-Category-Theory K I f β )
+  hor-comp-id-nat-iso-right-whisk-Synthetic-Category-Theory
+    {f = f} {g = g} {g' = g'} β =
+    ind-iso-Synthetic-Category-Theory I ( extension-sphere _ _ -1-dim-sphere)
+    ( f)
+    ( dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory f g g')
+    ( base-dependent-family-hor-comp-nat-iso-Synthetic-Category-Theory f g g' β)
 
-  base-dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory
-    : {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
-    {f g h : higher-cell-sphere-Reflexive-Globular-Type S} →
-    (α : higher-cell-sphere-Reflexive-Globular-Type
-      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
-    (β : higher-cell-sphere-Reflexive-Globular-Type
-      ( suspension-sphere-Reflexive-Globular-Type S g h)) →
-    base-Dependent-Family-Synthetic-Category-Theory
-      { S = suspension-sphere-Reflexive-Globular-Type S g h}
-      ( dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory S α β)
-  base-dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory
-    S {f} {g} {h} α β = id-iso-Synthetic-Category-Theory K
-      ( suspension-sphere-Reflexive-Globular-Type S f h)
-      ( comp-iso-Synthetic-Category-Theory K I S α β)
-    
-  partial-hor-comp-iso-Synthetic-Category-Theory :
-    {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
-    {f g h : higher-cell-sphere-Reflexive-Globular-Type S} →
-    {β β' : iso-Synthetic-Category-Theory K
-      ( suspension-sphere-Reflexive-Globular-Type S g h)} →
-    (α : iso-Synthetic-Category-Theory K
-      ( suspension-sphere-Reflexive-Globular-Type S f g)) →
-    (φ : iso-Synthetic-Category-Theory K
-      ( suspension-sphere-Reflexive-Globular-Type
-        ( suspension-sphere-Reflexive-Globular-Type S g h) β β')) →
-    iso-Synthetic-Category-Theory K
-      ( suspension-sphere-Reflexive-Globular-Type
-        ( suspension-sphere-Reflexive-Globular-Type S f h)
-        ( comp-iso-Synthetic-Category-Theory K I S α β)
-        ( comp-iso-Synthetic-Category-Theory K I S α β'))
-  partial-hor-comp-iso-Synthetic-Category-Theory S {f} {g} {h} {β} {β'}  α φ =
-    ind-Synthetic-Category-Theory I
-      ( suspension-sphere-Reflexive-Globular-Type S g h) _
-      ( dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory S α β)
-      ( base-dependent-family-partial-hor-comp-iso-Synthetic-Category-Theory
-        S α β)
-      ( β')
-      ( φ)
 
   dependent-family-hor-comp-iso-Synthetic-Category-Theory :
     {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
@@ -1054,7 +991,7 @@ module _
       { S = suspension-sphere-Reflexive-Globular-Type S f g}
       ( dependent-family-hor-comp-iso-Synthetic-Category-Theory S α β β')
   base-dependent-family-hor-comp-iso-Synthetic-Category-Theory
-    S α β β' φ = partial-hor-comp-iso-Synthetic-Category-Theory S α φ
+    S α β β' φ = right-whisk-iso-Synthetic-Category-Theory K I S α φ
 
   hor-comp-iso-Synthetic-Category-Theory :
     {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
@@ -1083,5 +1020,108 @@ module _
         S α β β' ψ)
       ( α')
       ( φ)
-    
+
+  hor-comp-id-iso-right-whisk-Synthetic-Category-Theory :
+    {n : ℕ} (S : sphere-Synthetic-Category-Theory K (succ-ℕ n)) →
+    {f g h : higher-cell-sphere-Reflexive-Globular-Type S} →
+    {α : iso-Synthetic-Category-Theory K
+      ( suspension-sphere-Reflexive-Globular-Type S f g)} →
+    {β β' : iso-Synthetic-Category-Theory K
+      ( suspension-sphere-Reflexive-Globular-Type S g h)} →
+    (φ : iso-Synthetic-Category-Theory K
+      ( suspension-sphere-Reflexive-Globular-Type
+        ( suspension-sphere-Reflexive-Globular-Type S g h) β β')) →
+    iso-Synthetic-Category-Theory K
+      ( suspension-sphere-Reflexive-Globular-Type
+        ( suspension-sphere-Reflexive-Globular-Type
+          ( suspension-sphere-Reflexive-Globular-Type S f h)
+          ( comp-iso-Synthetic-Category-Theory K I S α β)
+          ( comp-iso-Synthetic-Category-Theory K I S α β'))
+        ( hor-comp-iso-Synthetic-Category-Theory S
+          ( id-iso-Synthetic-Category-Theory K
+            ( suspension-sphere-Reflexive-Globular-Type S f g) α)
+          ( φ))
+        ( right-whisk-iso-Synthetic-Category-Theory K I S α φ))
+  hor-comp-id-iso-right-whisk-Synthetic-Category-Theory
+    S {f = f} {g = g} {α = α} {β = β} {β' = β'} φ =
+    ind-iso-Synthetic-Category-Theory I
+      ( suspension-sphere-Reflexive-Globular-Type S f g)
+      ( α)
+      ( dependent-family-hor-comp-iso-Synthetic-Category-Theory S α β β')
+      ( base-dependent-family-hor-comp-iso-Synthetic-Category-Theory S α β β' φ)
+```
+
+### Absorption law for horizontal composition of natural isomorphisms
+
+**Comment.** For α : f ≅ f' and β : g ≅ g', where f,f' : C → D and g,g' : D → E,
+we have that β * α ≅ (β * f') ∘ (g * α).
+
+```agda
+module _
+  {l : Level} (K : Cosmos-Synthetic-Category-Theory l)
+  (I : path-induction-Synthetic-Category-Theory K)
+  where
+
+  dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory :
+    {C D E : category-Synthetic-Category-Theory K}
+    (f : functor-Synthetic-Category-Theory K C D) →
+    (g g' : functor-Synthetic-Category-Theory K D E) →
+    (β : nat-iso-Synthetic-Category-Theory K g g') →
+    Dependent-Family-Synthetic-Category-Theory
+      { G = logos-Synthetic-Category-Theory K}
+      ( extension-sphere C D -1-dim-sphere) ( f)
+  dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory
+    {C} {D} {E} f g g' β f' α =
+    extension-sphere C E
+      ( extension-sphere
+        ( comp-fun-Synthetic-Category-Theory K f g)
+        ( comp-fun-Synthetic-Category-Theory K f' g')
+        ( extension-sphere
+          ( hor-comp-nat-iso-Synthetic-Category-Theory K I α β)
+          ( comp-nat-iso-Synthetic-Category-Theory K I
+            ( left-whisk-nat-iso-Synthetic-Category-Theory K I α g)
+            ( right-whisk-nat-iso-Synthetic-Category-Theory K I f' β))
+          ( -1-dim-sphere)))
+
+  base-dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory :
+    {C D E : category-Synthetic-Category-Theory K}
+    (f : functor-Synthetic-Category-Theory K C D) →
+    (g g' : functor-Synthetic-Category-Theory K D E) →
+    (β : nat-iso-Synthetic-Category-Theory K g g') →
+    base-Dependent-Family-Synthetic-Category-Theory
+      { S =  extension-sphere _ _ -1-dim-sphere}
+      ( dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory
+        f g g' β)
+  base-dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory
+    f g g' β =
+    comp-3-iso-Synthetic-Category-Theory K I
+      ( hor-comp-id-nat-iso-right-whisk-Synthetic-Category-Theory K I β)
+      ( comp-3-iso-Synthetic-Category-Theory K I
+        ( inv-3-iso-Synthetic-Category-Theory K I
+          ( right-unit-law-comp-nat-iso-Synthetic-Category-Theory K I
+            ( right-whisk-nat-iso-Synthetic-Category-Theory K I f β)))
+        ( inv-3-iso-Synthetic-Category-Theory K I
+          ( left-whisk-3-iso-Synthetic-Category-Theory K I
+            ( right-whisk-nat-iso-Synthetic-Category-Theory K I f β)
+            ( unitality-left-whisk-nat-iso-Synthetic-Category-Theory K I g))))
+
+  hor-comp-nat-iso-absorption-Synthetic-Category-Theory :
+    {C D E : category-Synthetic-Category-Theory K}
+    {f f' : functor-Synthetic-Category-Theory K C D}
+    {g g' : functor-Synthetic-Category-Theory K D E}
+    (α : nat-iso-Synthetic-Category-Theory K f f') →
+    (β : nat-iso-Synthetic-Category-Theory K g g') →
+    3-iso-Synthetic-Category-Theory K
+      ( hor-comp-nat-iso-Synthetic-Category-Theory K I α β)
+      ( comp-nat-iso-Synthetic-Category-Theory K I
+        ( left-whisk-nat-iso-Synthetic-Category-Theory K I α g)
+        ( right-whisk-nat-iso-Synthetic-Category-Theory K I f' β))
+  hor-comp-nat-iso-absorption-Synthetic-Category-Theory
+    {C} {D} {E} {f} {f'} {g} {g'} α β =
+    ind-Synthetic-Category-Theory I (extension-sphere _ _ -1-dim-sphere) f
+      ( dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory
+        f g g' β) 
+      ( base-dependent-family-hor-comp-nat-iso-absorption-Synthetic-Category-Theory
+        f g g' β)
+      f' α
 ```

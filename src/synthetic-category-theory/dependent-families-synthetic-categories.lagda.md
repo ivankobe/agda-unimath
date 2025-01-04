@@ -41,7 +41,7 @@ family P is a dependent function of type (g : x → y) → (α : f ≅ g) → (P
 i.e. a dependent family of synthetic categories. 
 
 
--- ```agda
+```agda
 module _ where
 
   Dependent-Family-Synthetic-Category-Theory :
